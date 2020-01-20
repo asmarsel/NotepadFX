@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="lv.itlat.tony.MainController"
+            prefHeight="400.0" prefWidth="600.0">
+
+    <top>
+        <HBox>
+            <Button text="Add Record" onAction="#addRecord"/>
+        </HBox>
+    </top>
+
+    <center>
+        <TableView>
+            <columns>
+                <TableColumn text="Name"></TableColumn>
+                <TableColumn text="Email"></TableColumn>
+                <TableColumn text="Phone"></TableColumn>
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>

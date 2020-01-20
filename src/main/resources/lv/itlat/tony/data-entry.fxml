@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="lv.itlat.tony.DartaEntryController">
+
+    <center>
+        <GridPane vgap="8" hgap="8">
+
+            <Label text="Name" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField         GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="Email" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField          GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="Phone" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField          GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+
+        </GridPane>
+    </center>
+
+    <bottom>
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Ok"/>
+            <Button text="Cancel"/>
+        </HBox>
+    </bottom>
+
+</BorderPane>
