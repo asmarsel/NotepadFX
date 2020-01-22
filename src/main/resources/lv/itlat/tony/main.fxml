@@ -6,25 +6,44 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="lv.itlat.tony.MainController"
-            prefHeight="400.0" prefWidth="600.0">
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<fx:root xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         type="lv.itlat.tony.MainForm"
+         prefHeight="400.0" prefWidth="600.0">
 
     <top>
         <HBox>
             <Button text="Add Record" onAction="#addRecord"/>
+                            <!-- TODO:  сделать кнопку Edit-->
+            <Button text="Edit" onAction="#editRecord"/>
         </HBox>
     </top>
 
     <center>
-        <TableView>
+        <TableView fx:id="recordTable">
             <columns>
-                <TableColumn text="Name"></TableColumn>
-                <TableColumn text="Email"></TableColumn>
-                <TableColumn text="Phone"></TableColumn>
+
+                <TableColumn text="Name">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="name"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn text="Email">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="email"/>
+                    </cellValueFactory>
+                </TableColumn>
+
+                <TableColumn text="Phone">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="phone"/>
+                    </cellValueFactory>
+                </TableColumn>
+
             </columns>
         </TableView>
     </center>
 
-</BorderPane>
+</fx:root>
