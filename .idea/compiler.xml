@@ -6,8 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="NotepadFX" />
+        <module name="notepad-fx" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="notepad-fx" target="11" />
+    </bytecodeTargetLevel>
   </component>
 </project>

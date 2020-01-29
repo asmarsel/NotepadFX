@@ -1,11 +1,27 @@
 package lv.itlat.tony;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 
+import java.util.UUID;
+
 public class Record {
+    private SimpleObjectProperty<UUID> id = new SimpleObjectProperty<>(this, "id");
     private SimpleStringProperty name = new SimpleStringProperty(this, "name");
     private SimpleStringProperty email = new SimpleStringProperty(this, "email");
     private SimpleStringProperty phone = new SimpleStringProperty(this, "phone");
+
+    public UUID getId() {
+        return id.get();
+    }
+
+    public SimpleObjectProperty<UUID> idProperty() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id.set(id);
+    }
 
     public String getName() {
         return name.get();

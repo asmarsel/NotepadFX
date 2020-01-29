@@ -15,7 +15,6 @@
     <top>
         <HBox>
             <Button text="Add Record" onAction="#addRecord"/>
-                            <!-- TODO:  сделать кнопку Edit-->
             <Button text="Edit" onAction="#editRecord"/>
         </HBox>
     </top>
@@ -24,6 +23,11 @@
         <TableView fx:id="recordTable">
             <columns>
 
+                <TableColumn text="ID">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="id"/>
+                    </cellValueFactory>
+                </TableColumn>
                 <TableColumn text="Name">
                     <cellValueFactory>
                         <PropertyValueFactory property="name"/>

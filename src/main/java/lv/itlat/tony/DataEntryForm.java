@@ -3,6 +3,7 @@ package lv.itlat.tony;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -10,12 +11,14 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class DataEntryForm extends BorderPane {
     private final Stage stage = new Stage();
     public TextField nameField;
     public TextField emailField;
     public TextField phoneField;
+    public Label idLabel;
     private boolean isOk = false;
 
     public DataEntryForm(Pane parent) {
@@ -42,15 +45,25 @@ public class DataEntryForm extends BorderPane {
 
     }
 
-    public Record showAndGet() {
-        nameField.setText("John");
+    public Record showAndGet(Record existingRecord) {
+
+        if (existingRecord != null){
+            idLabel.setText(existingRecord.getId().toString());
+            nameField.setText(existingRecord.getName());
+            emailField.setText(existingRecord.getEmail());
+            phoneField.setText(existingRecord.getPhone());
+            stage.setTitle("Edit Record");
+        } else {
+            idLabel.setText(UUID.randomUUID().toString());
+        }
 
         stage.showAndWait();
         if (isOk) {
-            var rec = new Record();
+            var rec = existingRecord == null ? new Record(): existingRecord;
             rec.setName(nameField.getText());
             rec.setEmail(emailField.getText());
             rec.setPhone(phoneField.getText());
+            rec.setId(UUID.fromString(idLabel.getText()));
             return rec;
         } else {
             return null;
