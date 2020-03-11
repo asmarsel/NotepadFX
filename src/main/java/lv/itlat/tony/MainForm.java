@@ -1,16 +1,23 @@
 package lv.itlat.tony;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 import java.sql.*;
+import java.util.Optional;
 import java.util.UUID;
 
 public class MainForm extends BorderPane {
 
     public TableView<Record> recordTable;
+    public TextField nameSearchText;
+    public TextField emailSearchText;
+    public TextField phoneSearchText;
+    public Button editButton;
+    public Button deleteButton;
 
     public MainForm() throws IOException {
         var loader = new FXMLLoader(
@@ -22,40 +29,57 @@ public class MainForm extends BorderPane {
 
     public void initialize() throws SQLException {
 
-        Connection conn = DriverManager.getConnection("jdbc:h2:~/test1;AUTO_SERVER=TRUE");
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery("select * from records");
-        while (rs.next()) {
-            var id = (UUID) rs.getObject("ID");
-            var name = rs.getString("NAME");
-            var email = rs.getString("EMAIL");
-            var phone = rs.getString("PHONE");
+        var records = RecordDAO.getAllRecords();
+        recordTable.getItems().setAll(records);
 
-            var rec = new Record();
-            rec.setId(id);
-            rec.setName(name);
-            rec.setEmail(email);
-            rec.setPhone(phone);
+        editButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+                    return recordTable.getSelectionModel().getSelectedCells().size() == 0;
+                },
+                recordTable.getSelectionModel().getSelectedItems()));
+        deleteButton.disableProperty().bind(Bindings.createBooleanBinding(() -> {
+                    return recordTable.getSelectionModel().getSelectedCells().size() == 0;
+                },
+                recordTable.getSelectionModel().getSelectedItems()));
 
-            recordTable.getItems().add(rec);
-
-        }
-
-        conn.close();
     }
 
-    public void addRecord() {
+    public void addRecord() throws SQLException {
         var dataEntry = new DataEntryForm(this);
         var data = dataEntry.showAndGet(null);
         if (data != null) {
             recordTable.getItems().add(data);
+            RecordDAO.insertRecord(data);
         }
     }
 
-    public void editRecord() {
+    public void editRecord() throws SQLException {
+        var selected = recordTable.getSelectionModel().getSelectedItem();
+        var dataEntry = new DataEntryForm(this);
+        if (dataEntry.showAndGet(selected) != null) {
+            RecordDAO.updateRecord(selected);
+        }
+    }
+
+    public void doSearch() throws SQLException {
+        var name = nameSearchText.getText();
+        var email = emailSearchText.getText();
+        var phone = phoneSearchText.getText();
+        var records = RecordDAO.findRecords(name, email, phone);
+        recordTable.getItems().setAll(records);
+    }
+
+    public void deleteRecord() throws SQLException {
         var selected = recordTable.getSelectionModel().getSelectedItem();
 
-        var dataEntry = new DataEntryForm(this);
-        dataEntry.showAndGet(selected);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Deleting " + selected.getName() + "?");
+        alert.setContentText("Are You Sure?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            recordTable.getItems().remove(selected);
+        RecordDAO.deleteRecord(selected);
+        }
     }
 }

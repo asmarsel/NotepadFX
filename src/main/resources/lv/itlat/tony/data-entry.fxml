@@ -29,7 +29,7 @@
 
     <bottom>
         <HBox spacing="10" alignment="CENTER_RIGHT">
-            <Button text="Ok" onAction="#okPressed"/>
+            <Button fx:id="okButton" text="Ok" onAction="#okPressed"/>
             <Button text="Cancel" onAction="#cancelPressed"/>
         </HBox>
     </bottom>

@@ -1,8 +1,10 @@
 package lv.itlat.tony;
 
+import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -19,6 +21,7 @@ public class DataEntryForm extends BorderPane {
     public TextField emailField;
     public TextField phoneField;
     public Label idLabel;
+    public Button okButton;
     private boolean isOk = false;
 
     public DataEntryForm(Pane parent) {
@@ -45,9 +48,13 @@ public class DataEntryForm extends BorderPane {
 
     }
 
+    public void initialize() {
+        okButton.disableProperty().bind(Bindings.createBooleanBinding(() -> nameField.getText().strip().isBlank(), nameField.textProperty()));
+    }
+
     public Record showAndGet(Record existingRecord) {
 
-        if (existingRecord != null){
+        if (existingRecord != null) {
             idLabel.setText(existingRecord.getId().toString());
             nameField.setText(existingRecord.getName());
             emailField.setText(existingRecord.getEmail());
@@ -59,7 +66,7 @@ public class DataEntryForm extends BorderPane {
 
         stage.showAndWait();
         if (isOk) {
-            var rec = existingRecord == null ? new Record(): existingRecord;
+            var rec = existingRecord == null ? new Record() : existingRecord;
             rec.setName(nameField.getText());
             rec.setEmail(emailField.getText());
             rec.setPhone(phoneField.getText());
